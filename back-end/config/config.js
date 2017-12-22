@@ -6,4 +6,8 @@ var config = {
 }
 
 
+var apikeys = {
+	nfl: "93hqpgg3bp7g499rkbwe25as"
+}
+
 module.exports = config;

@@ -14,4 +14,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Final-Project' });
 });
 
+router.get('/MyTeams', function(req, res, next) {
+  res.render('index', { title: 'Final-Project' });
+});
+
 module.exports = router;
