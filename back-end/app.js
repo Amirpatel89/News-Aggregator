@@ -9,6 +9,21 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+const rp = require('request-promise');
+const cheerio = require('cheerio');
+// const options = {
+//   uri: `https://www.google.com`,
+//   transform: function (body) {
+//     return cheerio.load(body);
+//   }
+// };
+// rp(options)
+//   .then(($) => {
+//     console.log($);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,6 +46,10 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+
+
+
+
 
 // error handler
 app.use(function(err, req, res, next) {
