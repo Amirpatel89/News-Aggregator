@@ -2,7 +2,9 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var config = require('../config/config');
-const osmosis = require('osmosis');
+var request = require('request');
+var cheerio = require('cheerio');
+var urls = [];
 var connection = mysql.createConnection(config)
 connection.connect();
 
@@ -25,15 +27,6 @@ var bcrypt = require('bcrypt-nodejs');
 //   });
 
 
-osmosis
-    .get('https://www.google.co.in/search?q=falcons')
-    .find('.card-section')
-    .set('.card-section')
-    .data(function(data) {
-        console.log(data);
-    })
-
-
 
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Final-Project' });
@@ -42,5 +35,7 @@ router.get('/', function(req, res, next) {
 router.get('/MyTeams', function(req, res, next) {
   res.render('index', { title: 'Final-Project' });
 });
+
+
 
 module.exports = router;
