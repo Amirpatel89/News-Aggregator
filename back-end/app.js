@@ -11,21 +11,25 @@ var users = require('./routes/users');
 var app = express();
 const rp = require('request-promise');
 const cheerio = require('cheerio');
-// const options = {
-//   uri: `https://www.google.com`,
-//   transform: function (body) {
-//     return cheerio.load(body);
-//   }
-// };
-// rp(options)
-//   .then(($) => {
-//     console.log($);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
+// var PythonShell = require('python-shell');
 
-// view engine setup
+// PythonShell.run('./python/web_scrape.py', function (err, results) { 
+
+// console.log(results)
+// })
+var util = require("util");
+
+var spawn = require("child_process").spawn;
+var process = spawn('python',["./python/web_scrape.py"]);
+
+util.log('readingin')
+
+process.stdout.on('data',function(chunk){
+
+    var textChunk = chunk.toString('utf8');// buffer to string
+
+    util.log(textChunk);
+});
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 

@@ -1,13 +1,18 @@
+import sys
 import requests
 from bs4 import BeautifulSoup
 import mysql.connector
 
-url = 'https://www.newegg.com/Video-Cards-Video-Devices/Category/ID-38?Tpk=graphics%20card'
 
-source = requests.get(url).text
+data = "test"
+sys.stdout.flush()
 
-soup = BeautifulSoup(source, 'lxml')
-
+urlGraphics = 'https://www.newegg.com/Video-Cards-Video-Devices/Category/ID-38?Tpk=graphics%20card'
+urlRam = 'https://www.newegg.com/Desktop-Memory/SubCategory/ID-147?cm_sp=CAT_Memory_1-_-VisNav-_-Desktop-Memory'
+sourceGraphics = requests.get(urlGraphics).text
+sourceRam = requests.get(urlRam).text
+soup_graphics = BeautifulSoup(sourceGraphics, 'lxml')
+soup_ram = BeautifulSoup(sourceRam, 'lxml')
 
 
 conn = mysql.connector.connect(host='127.0.0.1', user='x', database='scrape',password="x")                         
@@ -15,79 +20,64 @@ cursor = conn.cursor()
 
 
 
-# final_pic =('http:' + item_picture)
-# print(final_pic)
-
-# split_pic = (final_pic.split('CompressAll300/'))[1]
-# print(split_pic)
-item_container = soup.find_all('div', class_='item-container')
+graphics_container = soup_graphics.find_all('div', class_='item-container')
 
 
 def get_data():
 	lists = []
-	for index, item_name in enumerate(item_container):
+	for index, item_name in enumerate(graphics_container):
 		name = item_name.find_all('a', class_='item-title')[0].text
 		lists.append({'name': name})
 		lists[index]['index'] = index
 		
-	# for listing in item_container:
-	# 	names['name: %s' % listing.find_all('a', class_='item-title')[0].text] = ['name']
-		# print(name)
-	for index, item_price in enumerate(item_container):
+
+	for index, item_price in enumerate(graphics_container):
 		price = item_price.find('li', class_='price-current').find('strong')
 		if price == None:
-			# print('Not Available')
+
 			price == ('Not Available')
 			lists[index]['price'] = price
 
 
 		else:
-			# print('$' + price.text +'.99')
+
 			price = ('$' + price.text +'.99')
 			prices = []
 		lists[index]['price'] = price
-		# print(lists)
-	for index, item_picture in enumerate(item_container):
+
+	for index, item_picture in enumerate(graphics_container):
 			picture = 'http:' + item_picture.find('img', class_='lazy-img')['data-src']
-			# print (picture)
+			
 			lists[index]['picture'] = picture
-			# print(lists)
-	for index, item_shipping in enumerate(item_container):
+			
+	for index, item_shipping in enumerate(graphics_container):
 			shipping = (item_shipping.find('li', class_='price-ship').text).strip()
 			lists[index]['shipping'] = shipping
-			# print(lists[0]['name'])
-
-
-
-
-
-
-
-	
-	
+		
+	print(lists)
 	def create_table():
-		# map(lists, range(0, len(lists[index])))
-		val_index = lists[index]['index']
-		val_name = lists[index]['name']
-		val_picture = lists[index]['picture']
-		val_price = lists[index]['price']
-		val_shipping = lists[index]['shipping']
+		
+
+	    cursor.execute("DELETE FROM graphicscards ")
+	    conn.commit()
+
+	    for product in lists:
+	        val_index = product['index']
+	        val_name = product['name']
+	        val_picture = product['picture']
+	        val_price = product['price']
+	        val_shipping = product['shipping']
 
 
-		add_item = ("INSERT INTO newegg "
-					"(id, itemname, itempic, itemprice, itemshipping) "
-					"VALUES (%s, %s, %s, %s, %s)")
+	        add_item = ("INSERT INTO graphicscards "
+	                    "(id, itemname, itempic, itemprice, itemshipping) "
+	                    "VALUES (%s, %s, %s, %s, %s)")
 
-		data_item = (val_index, val_name, val_picture, val_price, val_shipping)
+	        data_item = (val_index, val_name, val_picture, val_price, val_shipping)
 
-
-		cursor.execute("DELETE FROM newegg ")
-		conn.commit()
-		cursor.execute(add_item, data_item)  
-		conn.commit()
-
-		cursor.close() 
-		conn.close()                                                                  
+	        cursor.execute(add_item, data_item)
+	        conn.commit()
+                                                                 
 
 	create_table();
 get_data()
