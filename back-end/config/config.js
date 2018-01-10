@@ -2,12 +2,10 @@ var config = {
     host: "127.0.0.1",
     user: "x",
     password: "x",
-    database: "",
+    database: "scrape",
 }
 
 
-var apikeys = {
-	nfl: "93hqpgg3bp7g499rkbwe25as"
-}
+
 
 module.exports = config;

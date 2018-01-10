@@ -19,17 +19,17 @@ const cheerio = require('cheerio');
 // })
 var util = require("util");
 
-var spawn = require("child_process").spawn;
-var process = spawn('python',["./python/web_scrape.py"]);
+// var spawn = require("child_process").spawn;
+// var process = spawn('python',["./python/web_scrape.py"]);
 
-util.log('readingin')
+// util.log('readingin')
 
-process.stdout.on('data',function(chunk){
+// process.stdout.on('data',function(chunk){
 
-    var textChunk = chunk.toString('utf8');// buffer to string
+//     var textChunk = chunk.toString('utf8');// buffer to string
 
-    util.log(textChunk);
-});
+//     util.log(textChunk);
+// });
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
