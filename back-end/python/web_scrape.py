@@ -19,7 +19,6 @@ sourceProcessor = requests.get(urlProcessor).text
 sourceMotherboard = requests.get(urlMotherboard).text
 sourceStorage= requests.get(urlStorage).text
 sourceCase= requests.get(urlCase).text
-
 soup_graphics = BeautifulSoup(sourceGraphics, 'lxml')
 soup_ram = BeautifulSoup(sourceRam, 'lxml')
 soup_processor = BeautifulSoup(sourceProcessor, 'lxml')
@@ -341,5 +340,6 @@ def get_storage():
 
 	create_table()
 get_storage()
+	def get_case()
 
 
