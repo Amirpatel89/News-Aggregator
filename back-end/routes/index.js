@@ -6,7 +6,7 @@ var connection = mysql.createConnection(config)
 connection.connect();
 
 router.get('/', (req, res, next)=>{
-	const getGraphics = `SELECT * from graphicscards`;
+	const getGraphics = "SELECT * from graphicscards";
 	connection.query(getGraphics, (error, results)=>{
 		if(error){
 			throw error;
