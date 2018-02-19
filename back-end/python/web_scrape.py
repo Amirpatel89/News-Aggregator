@@ -77,8 +77,8 @@ def get_graphics():
 			shipping = (item_shipping.find('li', class_='price-ship').text).strip()
 			lists[index]['shipping'] = shipping
 		
-		def create_table():
-		
+	def create_table():
+	
 
 	    cursor.execute("DELETE FROM graphicscards ")
 	    conn.commit()
@@ -340,6 +340,6 @@ def get_storage():
 
 	create_table()
 get_storage()
-	def create_table():
+	# def create_table():
 
 
