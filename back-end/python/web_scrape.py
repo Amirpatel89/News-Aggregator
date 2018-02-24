@@ -340,6 +340,6 @@ def get_storage():
 
 	create_table()
 get_storage()
-	# def create_table():
+	
 
 
